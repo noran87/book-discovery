@@ -12,35 +12,32 @@ function App() {
     const [savedBooksLoading, setSavedBooksLoading] = useState(true);
     const [savedBooksError, setSavedBooksError] = useState("");
 
-    async function loadSavedBooks() {
-        setSavedBooksLoading(true);
-        setSavedBooksError("");
-        try {
-            const response = await fetch(
-                "http://127.0.0.1:5001/api/books"
-            );
+   function loadSavedBooks() {
+        return fetch("http://127.0.0.1:5001/api/books")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Could not load saved books");
+                }
 
-            if (!response.ok) {
-                throw new Error("Could not load saved books");
-            }
-
-            const data = await response.json();
-
-            setSavedBooks(data.map((book) => ({
-                id: book.id,
-                key: book.book_key,
-                title: book.title,
-                author_name: [book.author],
-                first_publish_year: book.first_publish_year
-            })));
-        } catch (error) {
-            console.error(error);
-            setSavedBooksError("Could not load your reading list.");
-        } finally {
-            setSavedBooksLoading(false);
-        }
+                return response.json();
+            })
+            .then((data) => {
+                setSavedBooks(data.map((book) => ({
+                    id: book.id,
+                    key: book.book_key,
+                    title: book.title,
+                    author_name: [book.author],
+                    first_publish_year: book.first_publish_year
+                })));
+            })
+            .catch((error) => {
+                console.error(error);
+                setSavedBooksError("Could not load your reading list.");
+            })
+            .finally(() => {
+                setSavedBooksLoading(false);
+            });
     }
-
     useEffect(() => {
         loadSavedBooks();
     }, []);
@@ -102,7 +99,8 @@ function App() {
         if (!response.ok) {
             throw new Error("Could not save book");
         }
-
+        setSavedBooksLoading(true);
+        setSavedBooksError("");
         await loadSavedBooks();
     } catch (error) {
         console.error(error);
