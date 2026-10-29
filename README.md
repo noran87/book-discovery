@@ -69,3 +69,8 @@ The backend's CORS configuration must allow the frontend's address.
 ## Current Scope
 
 This version runs locally and uses one shared reading list. User accounts and separate reading lists per user are not implemented.
+
+## Screenshot
+
+![Book Discovery search results and reading list](screenshots/search_results.png)
+(screenshots/reading_list.png)
