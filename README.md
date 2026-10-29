@@ -72,5 +72,5 @@ This version runs locally and uses one shared reading list. User accounts and se
 
 ## Screenshot
 
-![Book Discovery search results and reading list](screenshots/search_results.png)
-(screenshots/reading_list.png)
+![Book Discovery search results ](screenshots/search_results.png)
+![Book Discovery reading list](screenshots/reading_list.png)
